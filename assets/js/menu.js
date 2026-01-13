@@ -473,7 +473,7 @@ window.MenuApp = {
                              alt="${item.name}" 
                              class="menu-item-image"
                              style="width: 100%; height: 100%; object-fit: contain;" 
-                             onerror="this.src='assets/images/icons/ui/placeholder.png'">
+                             onerror="this.onerror=null; this.src='https://placehold.co/600x400?text=No+Image';">
                     </div>
                     
                     <span class="category-badge">${category.category}</span>
