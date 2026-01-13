@@ -80,7 +80,7 @@ module.exports = async (req, res) => {
                 { role: "system", content: systemPrompt },
                 { role: "user", content: message }
             ],
-            model: "llama3-8b-8192", // Super fast and free
+            model: "llama-3.3-70b-versatile", // Current supported model
             temperature: 0.5,
             max_tokens: 200,
         });
