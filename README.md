@@ -60,8 +60,8 @@ Para subir la web a producción:
 1.  Abre [Vercel](https://vercel.com) e inicia sesión.
 2.  Importa este repositorio.
 3.  En la configuración del proyecto (**Settings > Environment Variables**), añade:
-    *   **Key**: `GEMINI_API_KEY`
-    *   **Value**: `AIz...` (Tu clave de Google AI Studio).
+    *   **Key**: `GROQ_API_KEY`
+    *   **Value**: `gsk_...` (Tu clave de Groq Cloud).
 4.  ¡Listo! Vercel detectará automáticamente `api/chat.js` y `package.json`.
 
 ---
