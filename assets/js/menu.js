@@ -3,415 +3,95 @@
 
 const MENU_DATA = [
     {
-        "category": "Brunch",
+        "category": "Entrantes / Starters",
         "items": [
-            {
-                "name": "Balsamic Chicken Fillet",
-                "subtitle": "Con Ensalada De Tomate Y Rucula",
-                "price": "7.95",
-                "id": "balsamic-chicken-fillet",
-                "image": "balsamic-chicken-fillet.jpg",
-                "ingredients": ["Pollo", "tomate", "rúcula", "reducción de vinagre balsámico", "aceite de oliva"],
-                "allergens": ["Sulfitos"]
-            },
-            {
-                "name": "Chicken Fillet Sweet Mush Potato",
-                "subtitle": "Brocoli With Peri Peri Sauce",
-                "price": "8.50",
-                "id": "chicken-fillet-sweet-mush",
-                "image": "chicken-fillet-sweet-mush.jpg",
-                "ingredients": ["Pollo", "boniato", "brócoli", "salsa peri peri"],
-                "allergens": ["Sulfitos"]
-            },
-            {
-                "name": "Chicken Cakes",
-                "subtitle": "Carrots Calabacin Spring Onion Eggs",
-                "price": "7.50",
-                "id": "chicken-cakes",
-                "image": "chicken-cakes.jpg",
-                "ingredients": ["Pollo picado", "zanahoria", "calabacín", "cebolla tierna", "huevo"],
-                "allergens": ["Huevo"]
-            },
-            {
-                "name": "Chicken Fillet Fries",
-                "subtitle": "Sweet Potato Lettuce And Tomato",
-                "price": "7.85",
-                "id": "chicken-fillet-fries",
-                "image": "chicken-fillet-fries.jpg",
-                "ingredients": ["Pollo", "patata", "lechuga", "tomate"],
-                "allergens": []
-            },
-            {
-                "name": "Beef Teryaki Rice",
-                "subtitle": "Lettuce Tomato Mangocucumber Red Onion Spring Onion",
-                "price": "8.95",
-                "id": "beef-teryaki-rice",
-                "image": "beef-teryaki-rice.jpg",
-                "ingredients": ["Ternera", "arroz", "salsa teriyaki", "verduras"],
-                "allergens": ["Soja", "Gluten"]
-            },
-            {
-                "name": "Chicken Wrap Special",
-                "subtitle": "By Chef Served Fries Sweet Potato",
-                "price": "7.95",
-                "id": "chicken-wrap-special",
-                "image": "chicken-wrap-special.jpg",
-                "ingredients": ["Pollo", "tortilla de trigo", "verduras", "salsa especial"],
-                "allergens": ["Gluten"]
-            },
-            {
-                "name": "Quinoa Salmon",
-                "subtitle": "Zuchini, Bell Pepper, Red Onion, Parsley, Garlic Lemon",
-                "price": "9.50",
-                "id": "quinoa-salmon",
-                "image": "quinoa-salmon.jpg",
-                "ingredients": ["Quinoa", "salmón", "verduras", "limón"],
-                "allergens": ["Pescado"]
-            },
-            {
-                "name": "Quinoa Salad",
-                "subtitle": "Zuchini, Bell Pepper, Red Onion, Parsley, Garlic Lemon",
-                "price": "9.95",
-                "id": "quinoa-salad",
-                "image": "quinoa-salad.jpg",
-                "ingredients": ["Quinoa", "calabacín", "pimiento", "cebolla", "ajo", "limón"],
-                "allergens": []
-            }
+            { "id": "1", "name": "Satay Gai", "price": "7.00", "description": "Pinchitos de pollo marinado con hierbas aromáticas, salsa de cacahuete y pepino.", "ingredients": ["Pollo", "cacahuetes", "leche de coco", "curry", "azúcar", "vinagre", "pepino", "ajo"], "allergens": ["Cacahuetes", "Soja"] },
+            { "id": "2", "name": "Satay Goong", "price": "8.00", "description": "Pinchitos de gambas marinadas, salsa de cacahuete y pepino.", "ingredients": ["Gambas", "cacahuetes", "leche de coco", "curry", "pepino", "ajo"], "allergens": ["Crustáceos", "Cacahuetes", "Soja"] },
+            { "id": "3", "name": "Poa Pia Thod (Spring Rolls)", "price": "7.00", "description": "Rollitos de primavera con salsa dulce de chile.", "ingredients": ["Zanahoria", "col", "cebolla", "fideos de arroz", "papel de arroz"], "allergens": ["Soja", "Gluten (trazas)"] },
+            { "id": "4", "name": "Samosa", "price": "7.00", "description": "Triángulo relleno de pollo picado, patata y verduras.", "ingredients": ["Pollo", "patata", "zanahoria", "guisantes", "especias"], "allergens": ["Gluten (trazas)"] },
+            { "id": "5", "name": "Tao Hoo Thod", "price": "7.50", "description": "Tofu frito con salsa chile dulce y cacahuetes.", "ingredients": ["Tofu", "cacahuetes", "salsa dulce de chile", "ajo"], "allergens": ["Soja", "Cacahuetes"] },
+            { "id": "6", "name": "Thod Mann Plaa (Fish Cake)", "price": "7.50", "description": "Pastelitos de pescado especiados con pepino y cacahuetes.", "ingredients": ["Pescado blanco", "huevo", "curry rojo", "judías verdes", "pepino", "cacahuetes"], "allergens": ["Pescado", "Huevo", "Cacahuetes"] },
+            { "id": "7", "name": "Entradas Mixtas (2 Pers)", "price": "19.50", "description": "Tabla variada: Satay, Spring Rolls, Fish Cake, etc.", "ingredients": ["Combinación de entrantes anteriores"], "allergens": ["Crustáceos", "Pescado", "Cacahuetes", "Soja", "Huevo", "Gluten"] }
         ]
     },
     {
-        "category": "Desayunos",
+        "category": "Sopas / Soups",
         "items": [
-            {
-                "name": "Desayuno Grande",
-                "description": "2 Bacon, 2 Huevos, 2 Salchicha, bakebeans, tomate, champinones, hashbrown y tostada",
-                "price": "9.75",
-                "id": "desayuno-grande",
-                "image": "desayuno-grande.jpg",
-                "ingredients": ["Bacon", "huevos", "salchicha", "baked beans", "tomate", "champiñones", "hashbrown", "tostada"],
-                "allergens": ["Gluten", "Huevo"]
-            },
-            {
-                "name": "Desayuno Mediano",
-                "description": "1 bacon, 1 huevo, 1 salchicha, Bakebeans, Tomate, Champinones y Tostada",
-                "price": "6.95",
-                "id": "desayuno-mediano",
-                "image": "desayuno-mediano.jpg",
-                "ingredients": ["Bacon", "huevo", "salchicha", "baked beans", "tomate", "champiñones", "tostada"],
-                "allergens": ["Gluten", "Huevo"]
-            },
-            {
-                "name": "Desayuno Turco",
-                "description": "Salchicha, Spinaca, Avocado, Quezo Feta Y Tostada",
-                "price": "7.50",
-                "id": "desayuno-turco",
-                "image": "desayuno-turco.jpg",
-                "ingredients": ["Salchicha", "espinaca", "aguacate", "queso feta", "tostada"],
-                "allergens": ["Lácteos", "Gluten"]
-            },
-            {
-                "name": "Huevos Fritos",
-                "description": "Con Sweet",
-                "price": "5.00",
-                "id": "huevos-fritos",
-                "image": "huevos-fritos.jpg",
-                "ingredients": ["Huevos", "boniato"],
-                "allergens": ["Huevo"]
-            }
+            { "id": "8", "name": "Tom Yum Hed", "price": "8.00", "description": "Sopa de champiñones picante y ácida.", "ingredients": ["Champiñones", "hierba limón", "lima kaffir", "chile", "zumo de lima"], "allergens": [] },
+            { "id": "9", "name": "Tom Kha Hed", "price": "8.00", "description": "Sopa de champiñones con leche de coco.", "ingredients": ["Champiñones", "leche de coco", "galangal", "hierba limón"], "allergens": [] },
+            { "id": "10", "name": "Tom Yam Goong", "price": "9.00", "description": "Sopa tradicional picante con gambas.", "ingredients": ["Gambas", "champiñones", "tomate", "chile", "hierba limón"], "allergens": ["Crustáceos"] },
+            { "id": "11", "name": "Tom Kha Goong", "price": "9.00", "description": "Sopa de coco con gambas.", "ingredients": ["Gambas", "leche de coco", "galangal", "hierba limón"], "allergens": ["Crustáceos"] },
+            { "id": "12", "name": "Tom Yam Gai", "price": "8.50", "description": "Sopa tradicional picante con pollo.", "ingredients": ["Pollo", "champiñones", "chile", "lima"], "allergens": [] },
+            { "id": "13", "name": "Tom Kha Gai", "price": "8.50", "description": "Sopa de pollo con leche de coco.", "ingredients": ["Pollo", "leche de coco", "galangal", "hierba limón"], "allergens": [] }
         ]
     },
     {
-        "category": "Special de la Casa",
+        "category": "Ensaladas / Salads",
         "items": [
-            {
-                "name": "Tostada Aguacate Pochado",
-                "description": "Tostada Con Aguacate Huevos Pochado Salmon Ahumado",
-                "price": "7.50",
-                "id": "tostada-aguacate-pochado",
-                "image": "tostada-aguacate-pochado.jpg",
-                "ingredients": ["Pan", "aguacate", "huevos pochados", "salmón"],
-                "allergens": ["Gluten", "Huevo", "Pescado"]
-            },
-            {
-                "name": "Revuelto Salmon",
-                "description": "Huevos Revuelto Con Salmon Ahumado Aguacate Y Tostada",
-                "price": "7.50",
-                "id": "revuelto-salmon",
-                "image": "revuelto-salmon.jpg",
-                "ingredients": ["Huevos", "salmón", "aguacate", "tostada"],
-                "allergens": ["Gluten", "Huevo", "Pescado"]
-            },
-            {
-                "name": "Huevos Escalpado",
-                "description": "Con Salmon Ahumado Salsa Bernesa Y Tostada",
-                "price": "8.25",
-                "id": "huevos-escalpado",
-                "image": "huevos-escalpado.jpg",
-                "ingredients": ["Huevos", "salmón", "mantequilla", "yema", "tostada"],
-                "allergens": ["Huevo", "Lácteos", "Gluten", "Pescado"]
-            }
+            { "id": "14", "name": "Som Tam", "price": "12.50", "description": "Ensalada de papaya verde.", "ingredients": ["Papaya verde", "tomate cherry", "judías verdes", "ajo", "chile", "lima"], "allergens": [] },
+            { "id": "15", "name": "Laab Salmon", "price": "10.50", "description": "Ensalada fresca de salmón.", "ingredients": ["Salmón", "lima", "cilantro", "menta", "cebolla roja"], "allergens": ["Pescado"] },
+            { "id": "16", "name": "Laab Gai", "price": "11.00", "description": "Ensalada de pollo picado.", "ingredients": ["Pollo", "hierbas frescas", "lima", "chile"], "allergens": [] },
+            { "id": "17", "name": "Pra Goong", "price": "13.50", "description": "Ensalada picante de gambas.", "ingredients": ["Gambas", "hierba limón", "chile", "lima kaffir"], "allergens": ["Crustáceos"] },
+            { "id": "18", "name": "Yam Woon Sen", "price": "13.50", "description": "Ensalada con fideos transparentes.", "ingredients": ["Fideos de arroz", "gambas", "pollo", "champiñones"], "allergens": ["Crustáceos"] }
         ]
     },
     {
-        "category": "Café",
+        "category": "Pollo o Ternera / Chicken or Beef",
+        "description": "Elige tu proteína: Pollo o Ternera",
         "items": [
-            {
-                "name": "Cafe Con Leche",
-                "price": "1.50",
-                "id": "cafe-con-leche",
-                "image": "cafe-con-leche.jpg",
-                "ingredients": ["Café", "Leche"],
-                "allergens": ["Lácteos"]
-            },
-            {
-                "name": "Café Americano",
-                "price": "1.50",
-                "id": "cafe-americano",
-                "image": "cafe-americano.jpg",
-                "ingredients": ["Café", "Agua"],
-                "allergens": []
-            },
-            {
-                "name": "Café Cortado",
-                "price": "1.50",
-                "id": "cafe-cortado",
-                "image": "cafe-cortado.jpg",
-                "ingredients": ["Café", "Leche"],
-                "allergens": ["Lácteos"]
-            },
-            {
-                "name": "Expresso",
-                "price": "1.40",
-                "id": "expresso",
-                "image": "expresso.jpg",
-                "ingredients": ["Café"],
-                "allergens": []
-            },
-            {
-                "name": "Café Solo Double",
-                "price": "1.80",
-                "id": "cafe-solo-double",
-                "image": "cafe-solo-double.jpg",
-                "ingredients": ["Café doble"],
-                "allergens": []
-            },
-            {
-                "name": "Café Bonbon",
-                "price": "2.50",
-                "id": "cafe-bonbon",
-                "image": "cafe-bonbon.jpg",
-                "ingredients": ["Café", "Leche condensada"],
-                "allergens": ["Lácteos"]
-            },
-            {
-                "name": "Café Sombra",
-                "price": "1.50",
-                "id": "cafe-sombra",
-                "image": "cafe-sombra.jpg",
-                "ingredients": ["Café", "Leche"],
-                "allergens": ["Lácteos"]
-            },
-            {
-                "name": "Capuchino",
-                "price": "2.20",
-                "id": "capuchino",
-                "image": "capuchino.jpg",
-                "ingredients": ["Café", "Leche", "Espuma"],
-                "allergens": ["Lácteos"]
-            },
-            {
-                "name": "Colacao",
-                "price": "2.25",
-                "id": "colacao",
-                "image": "colacao.jpg",
-                "ingredients": ["Cacao", "Leche", "Azúcar"],
-                "allergens": ["Lácteos"]
-            },
-            {
-                "name": "Irish Coffee",
-                "price": "5.50",
-                "id": "irish-coffee",
-                "image": "irish-coffee.jpg",
-                "ingredients": ["Café", "Whisky", "Nata"],
-                "allergens": ["Lácteos"]
-            }
+            { "id": "19", "name": "Kaeng Panang", "price": "Consultar", "description": "Curry Panang rico y cremoso.", "ingredients": ["Leche de coco", "curry panang", "cacahuetes"], "allergens": ["Cacahuetes"] },
+            { "id": "20", "name": "Kaeng Massaman", "price": "Consultar", "description": "Curry Massaman suave con patatas.", "ingredients": ["Patatas", "leche de coco", "cacahuetes", "salsa tamarindo"], "allergens": ["Cacahuetes"] },
+            { "id": "21", "name": "Kaeng Phed (Red Curry)", "price": "Consultar", "description": "Curry rojo con berenjena.", "ingredients": ["Leche de coco", "curry rojo", "berenjena", "albahaca"], "allergens": [] },
+            { "id": "22", "name": "Phad Khing", "price": "Consultar", "description": "Salteado con jengibre.", "ingredients": ["Jengibre", "cebollino", "salsa de soja", "setas"], "allergens": ["Soja"] },
+            { "id": "23", "name": "Phad Kapraw", "price": "Consultar", "description": "Salteado picante con albahaca.", "ingredients": ["Albahaca tailandesa", "chile", "ajo", "judías"], "allergens": [] },
+            { "id": "24", "name": "Phad Med Mamuang", "price": "Consultar", "description": "Salteado con anacardos.", "ingredients": ["Anacardos", "cebolla", "pimiento", "salsa especial"], "allergens": ["Frutos secos"] },
+            { "id": "25", "name": "Kaeng Karee (Yellow Curry)", "price": "Consultar", "description": "Curry amarillo suave.", "ingredients": ["Leche de coco", "curry amarillo", "patatas", "cebolla"], "allergens": [] },
+            { "id": "26", "name": "Kae Par (Jungle Curry)", "price": "Consultar", "description": "Curry rojo estilo selva (sin leche de coco).", "ingredients": ["Verduras mixtas", "curry rojo", "especias", "chile"], "allergens": [] },
+            { "id": "27", "name": "Kaeng Kaew Whan (Green Curry)", "price": "Consultar", "description": "Curry verde aromático.", "ingredients": ["Leche de coco", "curry verde", "bambú", "albahaca"], "allergens": [] }
         ]
     },
     {
-        "category": "Tea",
+        "category": "Cordero / Lamb",
         "items": [
-            {
-                "name": "Red Thai Cold",
-                "price": "4.25",
-                "id": "red-thai-cold",
-                "image": "red-thai-cold.jpg",
-                "ingredients": ["Té rojo", "Hielo"],
-                "allergens": []
-            },
-            {
-                "name": "Red Thai Hot",
-                "price": "3.00",
-                "id": "red-thai-hot",
-                "image": "red-thai-hot.jpg",
-                "ingredients": ["Té rojo", "Agua caliente"],
-                "allergens": []
-            },
-            {
-                "name": "Green Thai Cold",
-                "price": "4.25",
-                "id": "green-thai-cold",
-                "image": "green-thai-cold.jpg",
-                "ingredients": ["Té verde", "Hielo"],
-                "allergens": []
-            },
-            {
-                "name": "Green Thai Hot",
-                "price": "3.00",
-                "id": "green-thai-hot",
-                "image": "green-thai-hot.jpg",
-                "ingredients": ["Té verde", "Agua caliente"],
-                "allergens": []
-            },
-            {
-                "name": "Ginger Cold",
-                "price": "3.00",
-                "id": "ginger-cold",
-                "image": "ginger-cold.jpg",
-                "ingredients": ["Jengibre", "Hielo"],
-                "allergens": []
-            },
-            {
-                "name": "Ginger Hot",
-                "price": "3.00",
-                "id": "ginger-hot",
-                "image": "ginger-hot.jpg",
-                "ingredients": ["Jengibre", "Agua caliente"],
-                "allergens": []
-            }
+            { "id": "28", "name": "Kae Kratheam", "price": "Consultar", "description": "Cordero al ajo y pimienta.", "ingredients": ["Cordero", "ajo", "pimienta negra", "cilantro"], "allergens": [] },
+            { "id": "29", "name": "Kaeng Karee Kae", "price": "Consultar", "description": "Cordero en curry amarillo.", "ingredients": ["Cordero", "leche de coco", "patatas", "curry amarillo"], "allergens": [] },
+            { "id": "30", "name": "Massaman Kae", "price": "Consultar", "description": "Cordero Massaman tradicional.", "ingredients": ["Cordero", "leche de coco", "patatas", "cacahuetes"], "allergens": ["Cacahuetes"] },
+            { "id": "31", "name": "Kapraw Kae", "price": "Consultar", "description": "Cordero con albahaca picante.", "ingredients": ["Cordero", "albahaca", "chile", "judías verdes"], "allergens": [] }
         ]
     },
     {
-        "category": "Pan Cakes",
+        "category": "Pato / Duck",
         "items": [
-            {
-                "name": "Sirope De Fruta",
-                "description": "De Bosque Con Berries",
-                "price": "6.95",
-                "id": "sirope-fruta",
-                "image": "sirope-fruta.jpg",
-                "ingredients": ["Harina", "huevo", "leche", "sirope", "frutas del bosque"],
-                "allergens": ["Gluten", "Huevo", "Lácteos"]
-            },
-            {
-                "name": "Nutella Platano",
-                "description": "Y Miel",
-                "price": "5.95",
-                "id": "nutella-platano",
-                "image": "nutella-platano.jpg",
-                "ingredients": ["Harina", "huevo", "leche", "nutella", "plátano"],
-                "allergens": ["Gluten", "Huevo", "Lácteos", "Frutos secos"]
-            },
-            {
-                "name": "Con Helado",
-                "description": "Y Pistacho",
-                "price": "7.50",
-                "id": "con-helado",
-                "image": "con-helado.jpg",
-                "ingredients": ["Harina", "huevo", "leche", "helado", "pistacho"],
-                "allergens": ["Gluten", "Huevo", "Lácteos", "Frutos secos"]
-            }
+            { "id": "32", "name": "Ped Laad Prik", "price": "Consultar", "description": "Pato con salsa dulce de chile.", "ingredients": ["Pato", "salsa dulce de chile", "albahaca"], "allergens": ["Soja"] },
+            { "id": "33", "name": "Ped Krob Lemongrass", "price": "Consultar", "description": "Pato crujiente estilo Lemongrass.", "ingredients": ["Pato", "verduras salteadas", "hierba limón", "salsa especial"], "allergens": ["Soja"] },
+            { "id": "34", "name": "Ped Kratheam", "price": "Consultar", "description": "Pato al ajo y pimienta.", "ingredients": ["Pato", "ajo", "pimienta"], "allergens": [] },
+            { "id": "35", "name": "Ped Pad Pak", "price": "Consultar", "description": "Pato salteado con verduras.", "ingredients": ["Pato", "verduras frescas", "salsa de soja"], "allergens": ["Soja"] },
+            { "id": "36", "name": "Ped Wine Daeng", "price": "Consultar", "description": "Pato al vino tinto.", "ingredients": ["Pato", "vino tinto", "especias"], "allergens": ["Sulfitos"] },
+            { "id": "37", "name": "Kaeng Phed Ped Yang", "price": "Consultar", "description": "Curry rojo de pato asado.", "ingredients": ["Pato", "leche de coco", "curry rojo", "bambú", "lichi", "piña"], "allergens": [] }
         ]
     },
     {
-        "category": "Tortilla a Tu Gusto",
-        "description": "Base (5.00 €) + Ingredientes",
+        "category": "Pescado y Marisco / Fish & Seafood",
         "items": [
-            {
-                "name": "Tortilla Base",
-                "price": "5.00",
-                "id": "tortilla-base",
-                "image": "tortilla-base.jpg",
-                "ingredients": ["Huevo"],
-                "allergens": ["Huevo"]
-            },
-            {
-                "name": "Ingrediente Extra",
-                "description": "Queso Feta, Pavo, Tomate, Champinones, Cebolla, Spinaca, Pimientos, Bacon",
-                "price": "+1.00",
-                "id": "extra-tortilla",
-                "image": "extra-tortilla.jpg",
-                "ingredients": ["Opcional: Queso feta, Pavo, Champiñones, Bacon, Cebolla, Tomate, Espinaca, Pimientos"],
-                "allergens": ["Lácteos (si lleva queso)"]
-            }
+            { "id": "38", "name": "Gambas al Curry", "price": "Consultar", "description": "Gambas en salsa de curry variada.", "ingredients": ["Gambas", "curry", "leche de coco", "verduras"], "allergens": ["Crustáceos"] },
+            { "id": "47", "name": "Chu-Chee Pla", "price": "Consultar", "description": "Dorada en curry rojo seco.", "ingredients": ["Dorada (pescado)", "curry rojo", "leche de coco", "lima kaffir"], "allergens": ["Pescado"] }
         ]
     },
     {
-        "category": "Mollete",
+        "category": "Arroces y Tallarines / Rice & Noodles",
         "items": [
-            {
-                "name": "Tostada Aceite Y Tomate",
-                "price": "2.40",
-                "id": "mollete-aceite",
-                "image": "mollete-aceite.jpg",
-                "ingredients": ["Pan", "aceite de oliva", "tomate"],
-                "allergens": ["Gluten"]
-            },
-            {
-                "name": "Tostada Mantequilla Y Mermelada",
-                "price": "2.50",
-                "id": "mollete-mantequilla",
-                "image": "mollete-mantequilla.jpg",
-                "ingredients": ["Pan", "mantequilla", "mermelada"],
-                "allergens": ["Gluten", "Lácteos"]
-            },
-            {
-                "name": "Mixto",
-                "price": "3.40",
-                "id": "mollete-mixto",
-                "image": "mollete-mixto.jpg",
-                "ingredients": ["Pan", "jamón", "queso"],
-                "allergens": ["Gluten", "Lácteos"]
-            },
-            {
-                "name": "Bacon Y Queso",
-                "price": "3.75",
-                "id": "mollete-bacon",
-                "image": "mollete-bacon.jpg",
-                "ingredients": ["Pan", "bacon", "queso"],
-                "allergens": ["Gluten", "Lácteos"]
-            },
-            {
-                "name": "Tortilla Francesa",
-                "price": "3.60",
-                "id": "mollete-francesa",
-                "image": "mollete-francesa.jpg",
-                "ingredients": ["Pan", "huevo"],
-                "allergens": ["Gluten", "Huevo"]
-            },
-            {
-                "name": "Catalana",
-                "price": "3.60",
-                "id": "mollete-catalana",
-                "image": "mollete-catalana.jpg",
-                "ingredients": ["Pan", "tomate", "jamón"],
-                "allergens": ["Gluten"]
-            },
-            {
-                "name": "Serranito De Pollo",
-                "price": "4.25",
-                "id": "mollete-serranito",
-                "image": "mollete-serranito.jpg",
-                "ingredients": ["Pan", "pollo", "pimiento"],
-                "allergens": ["Gluten"]
-            },
-            {
-                "name": "Pata Jamon Y Tomate",
-                "price": "3.75",
-                "id": "mollete-jamon",
-                "image": "mollete-jamon.jpg",
-                "ingredients": ["Pan", "jamón", "tomate"],
-                "allergens": ["Gluten"]
-            }
+            { "id": "48", "name": "Khao Phad Pak", "price": "Consultar", "description": "Arroz frito con verduras.", "ingredients": ["Arroz", "verduras mixtas", "soja"], "allergens": ["Soja"] },
+            { "id": "49", "name": "Kao Souy", "price": "3.00", "description": "Arroz Jazmín blanco.", "ingredients": ["Arroz jazmín"], "allergens": [] },
+            { "id": "50", "name": "Kao Maan Kati", "price": "3.50", "description": "Arroz con leche de coco.", "ingredients": ["Arroz jazmín", "leche de coco", "sésamo"], "allergens": ["Sésamo (posible)"] },
+            { "id": "51", "name": "Sticky Rice", "price": "3.50", "description": "Arroz glutinoso tradicional.", "ingredients": ["Arroz glutinoso"], "allergens": [] },
+            { "id": "52", "name": "Fried Rice with Eggs", "price": "Consultar", "description": "Arroz frito con huevo.", "ingredients": ["Arroz", "huevo", "cebollino"], "allergens": ["Huevo"] },
+            { "id": "53", "name": "Pineapple Fried Rice", "price": "Consultar", "description": "Arroz frito con pollo y piña.", "ingredients": ["Arroz", "pollo", "piña", "huevo", "pasas", "anacardos"], "allergens": ["Huevo", "Frutos secos"] },
+            { "id": "54", "name": "Phad Thai Gai", "price": "Consultar", "description": "Fideos de arroz con pollo (Clásico).", "ingredients": ["Fideos de arroz", "pollo", "huevo", "cacahuetes", "brotes de soja", "tamarindo"], "allergens": ["Huevo", "Cacahuetes", "Soja"] },
+            { "id": "55", "name": "Phad Thai Goong Sod", "price": "Consultar", "description": "Fideos de arroz con gambas.", "ingredients": ["Fideos de arroz", "gambas", "huevo", "cacahuetes", "tamarindo"], "allergens": ["Crustáceos", "Huevo", "Cacahuetes"] },
+            { "id": "56", "name": "Phad See Ew Gai", "price": "Consultar", "description": "Fideos de arroz anchos con pollo.", "ingredients": ["Fideos de arroz", "pollo", "verduras", "salsa de soja oscura"], "allergens": ["Soja"] },
+            { "id": "57", "name": "Phad See Ew Goong", "price": "Consultar", "description": "Fideos de arroz anchos con gambas.", "ingredients": ["Fideos de arroz", "gambas", "verduras", "salsa de soja"], "allergens": ["Crustáceos", "Soja"] },
+            { "id": "58", "name": "Guey Taew Phad Khi Mao", "price": "Consultar", "description": "Fideos picantes 'borrachos'.", "ingredients": ["Fideos de arroz", "pollo", "chile", "albahaca", "pimienta fresca"], "allergens": ["Soja"] },
+            { "id": "60", "name": "Chips / Patatas Fritas", "price": "4.00", "description": "Ración de patatas fritas.", "ingredients": ["Patata", "aceite vegetal", "sal"], "allergens": [] }
         ]
     }
 ];
