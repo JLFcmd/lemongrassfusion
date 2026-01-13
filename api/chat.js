@@ -49,7 +49,24 @@ module.exports = async (req, res) => {
     }
 
     try {
-        const { message } = typeof req.body === 'string' ? JSON.parse(req.body) : req.body;
+        let body = req.body;
+
+        // Handle stringified body (sometimes happens in Vercel)
+        if (typeof body === 'string') {
+            try {
+                body = JSON.parse(body);
+            } catch (e) {
+                console.error("Failed to parse body string:", body);
+                return res.status(400).json({ error: 'Invalid JSON body' });
+            }
+        }
+
+        // Safety check for body existence
+        if (!body || !body.message) {
+            return res.status(400).json({ error: 'Missing "message" in request body' });
+        }
+
+        const { message } = body;
         const apiKey = process.env.GEMINI_API_KEY;
 
         if (!apiKey) {
