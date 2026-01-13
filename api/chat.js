@@ -1,6 +1,6 @@
-const { GoogleGenerativeAI } = require("@google/generative-ai");
+const Groq = require("groq-sdk");
 
-// Allow CORS for local testing and production
+// Allow CORS
 const adjustCors = (res) => {
     res.setHeader('Access-Control-Allow-Credentials', true);
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -11,14 +11,7 @@ const adjustCors = (res) => {
     );
 };
 
-// Import Menu Data (We need a way to read it on server)
-// Since menu.js is client-side with 'window', we'll simulate the data here or read it via fs if better.
-// For simplicity in Vercel Serverless, let's paste the structured data structure or require it if it was a module.
-// Strategy: Client sends relevant context or we hardcode the simplified JSON here for the bot to read.
-// Better Strategy: The frontend sends the menu data context? No, too heavy.
-// We will duplicate the critical data here for the backend to use as context.
-// In a real app, this would come from a database.
-
+// Menu Context (Duplicated from frontend for simplicity)
 const MENU_CONTEXT = [
     { name: "Balsamic Chicken Fillet", ingredients: "Pollo, tomate, rúcula, vinagre balsámico", allergens: "Sulfitos", category: "Brunch" },
     { name: "Chicken Fillet Sweet Potato", ingredients: "Pollo, boniato, brócoli, salsa peri peri", allergens: "Sulfitos", category: "Brunch" },
@@ -33,7 +26,6 @@ const MENU_CONTEXT = [
     { name: "Tostada Aguacate Pochado", ingredients: "Pan, aguacate, huevo pochado, salmón", allergens: "Gluten, Huevo, Pescado", category: "Especials" },
     { name: "Pancakes Nutella", ingredients: "Harina, huevo, leche, nutella, plátano", allergens: "Gluten, Huevo, Lácteos, Frutos secos", category: "Pancakes" },
     { name: "Mollete Mixto", ingredients: "Pan, jamón, queso", allergens: "Gluten, Lácteos", category: "Molletes" },
-    // Simplified list for token efficiency, can be expanded
 ];
 
 module.exports = async (req, res) => {
@@ -49,60 +41,56 @@ module.exports = async (req, res) => {
     }
 
     try {
+        // Robust Body Parsing
         let body = req.body;
-
-        // Handle stringified body (sometimes happens in Vercel)
         if (typeof body === 'string') {
             try {
                 body = JSON.parse(body);
             } catch (e) {
-                console.error("Failed to parse body string:", body);
                 return res.status(400).json({ error: 'Invalid JSON body' });
             }
         }
-
-        // Safety check for body existence
         if (!body || !body.message) {
             return res.status(400).json({ error: 'Missing "message" in request body' });
         }
 
         const { message } = body;
-        const apiKey = process.env.GEMINI_API_KEY;
+        const apiKey = process.env.GROQ_API_KEY;
 
         if (!apiKey) {
-            console.error("API Key not found in environment variables");
-            return res.status(500).json({ error: 'Server configuration error: Missing API Key' });
+            console.error("GROQ_API_KEY missing");
+            return res.status(500).json({ error: 'Server Config Error: Missing GROQ_API_KEY' });
         }
 
-        const genAI = new GoogleGenerativeAI(apiKey);
-        const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+        const groq = new Groq({ apiKey: apiKey });
 
-        const prompt = `
-        Actúa como un camarero experto y amable del restaurante "Lemongrass Fusion".
-        
-        Tu tarea es ayudar al cliente a elegir qué comer basándote SOLO en la siguiente carta de menú.
-        Si el cliente pregunta por alérgenos, sé muy estricto y cuidadoso.
-        Si preguntan por algo que no está en la lista, di amablemente que no lo tenemos.
-        Sé breve, conciso y sugerente. Por favor, sé muy amable.
-
-        CARTA DEL RESTAURANTE (Datos técnicos):
+        const systemPrompt = `
+        Eres un camarero experto de "Lemongrass Fusion".
+        Usa estos datos de la carta para recomendar y responder dudas sobre alérgenos:
         ${JSON.stringify(MENU_CONTEXT)}
-
-        PREGUNTA DEL CLIENTE:
-        "${message}"
-
-        RESPUESTA DEL CAMARERO:
+        
+        Reglas:
+        1. Sé amable y breve.
+        2. Si preguntan por alérgenos, revisa la lista escrupulosamente.
+        3. Si no está en la lista, di que no lo tenemos.
         `;
 
-        const result = await model.generateContent(prompt);
-        const response = await result.response;
-        // Check for candidates
-        const text = response.text();
+        const completion = await groq.chat.completions.create({
+            messages: [
+                { role: "system", content: systemPrompt },
+                { role: "user", content: message }
+            ],
+            model: "llama3-8b-8192", // Super fast and free
+            temperature: 0.5,
+            max_tokens: 200,
+        });
 
-        res.status(200).json({ reply: text });
+        const reply = completion.choices[0]?.message?.content || "Lo siento, no he podido pensar una respuesta.";
+
+        res.status(200).json({ reply: reply });
 
     } catch (error) {
-        console.error('Gemini API Error Full:', error);
-        res.status(500).json({ error: 'Error procesando tu solicitud: ' + error.message });
+        console.error('Groq API Error:', error);
+        res.status(500).json({ error: 'Error del servidor: ' + error.message });
     }
 };
