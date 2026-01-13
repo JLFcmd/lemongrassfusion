@@ -11,21 +11,14 @@ const adjustCors = (res) => {
     );
 };
 
-// Menu Context (Duplicated from frontend for simplicity)
+// Menu Context (Simplified for AI efficiency)
 const MENU_CONTEXT = [
-    { name: "Balsamic Chicken Fillet", ingredients: "Pollo, tomate, rúcula, vinagre balsámico", allergens: "Sulfitos", category: "Brunch" },
-    { name: "Chicken Fillet Sweet Potato", ingredients: "Pollo, boniato, brócoli, salsa peri peri", allergens: "Sulfitos", category: "Brunch" },
-    { name: "Chicken Cakes", ingredients: "Pollo, zanahoria, calabacín, cebolla, huevo", allergens: "Huevo", category: "Brunch" },
-    { name: "Chicken Fillet Fries", ingredients: "Pollo, patata, lechuga, tomate", allergens: "Ninguno", category: "Brunch" },
-    { name: "Beef Teriyaki Rice", ingredients: "Ternera, arroz, salsa teriyaki, verduras", allergens: "Soja, Gluten", category: "Brunch" },
-    { name: "Chicken Wrap Special", ingredients: "Pollo, tortilla trigo, verduras, salsa", allergens: "Gluten", category: "Brunch" },
-    { name: "Quinoa Salmon", ingredients: "Quinoa, salmón, verduras, limón", allergens: "Pescado", category: "Brunch" },
-    { name: "Desayuno Grande", ingredients: "Bacon, huevos, salchicha, baked beans, tostada", allergens: "Gluten, Huevo", category: "Desayunos" },
-    { name: "Desayuno Mediano", ingredients: "Bacon, huevo, salchicha, tostada", allergens: "Gluten, Huevo", category: "Desayunos" },
-    { name: "Desayuno Turco", ingredients: "Salchicha, espinaca, aguacate, queso feta, tostada", allergens: "Lácteos, Gluten", category: "Desayunos" },
-    { name: "Tostada Aguacate Pochado", ingredients: "Pan, aguacate, huevo pochado, salmón", allergens: "Gluten, Huevo, Pescado", category: "Especials" },
-    { name: "Pancakes Nutella", ingredients: "Harina, huevo, leche, nutella, plátano", allergens: "Gluten, Huevo, Lácteos, Frutos secos", category: "Pancakes" },
-    { name: "Mollete Mixto", ingredients: "Pan, jamón, queso", allergens: "Gluten, Lácteos", category: "Molletes" },
+    { category: "Entrantes", items: "Satay Gai (Pollo, cacahuetes), Satay Goong (Gambas, cacahuetes), Spring Rolls (Veg, Soja), Samosa (Pollo, gluten), Tofu Frito, Fish Cake (Pescado, huevo)" },
+    { category: "Sopas", items: "Tom Yum (Picante, Gambas/Pollo), Tom Kha (Coco, Gambas/Pollo/Setas)" },
+    { category: "Ensaladas", items: "Som Tam (Papaya), Laab (Carne picada/Salmon), Yam Woon Sen (Fideos)" },
+    { category: "Curries y Carnes (Pollo/Ternera/Pato/Cordero)", items: "Panang (Cacahuetes), Massaman (Patata, Cacahuetes), Curry Rojo, Curry Verde, Curry Amarillo, Salteado Jengibre, Salteado Albahaca (Kapraw), Anacardos (Frutos secos)" },
+    { category: "Arroces y Fideos", items: "Pad Thai (Cacahuetes, Huevo), Pad See Ew (Soja), Arroz Frito, Arroz Jazmin, Sticky Rice" },
+    { note: "Alérgenos Clave: Cacahuetes en Satay/PadThai/Massaman. Soja en casi todos los salteados. Gluten en rebozados/salsas oscuras. Crustáceos en platos de gambas." }
 ];
 
 module.exports = async (req, res) => {
