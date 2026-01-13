@@ -1,312 +1,525 @@
-/* Page Layout */
-.menu-page-layout {
-    display: grid;
-    grid-template-columns: 250px 1fr;
-    gap: 2rem;
-    padding-top: 3rem;
-    margin-top: 5rem; /* Space for fixed header */
-}
+// Menu Rendering Logic
+// GLOBAL DATA (Enriched for AI Chatbot)
 
-/* Sidebar Styling */
-.menu-sidebar {
-    padding-right: 2rem;
-    border-right: 1px solid rgba(255,255,255,0.1);
-}
-
-.menu-sidebar h3 {
-    font-size: 1.2rem;
-    margin-bottom: 1.5rem;
-    font-weight: 700;
-}
-
-.filters-list {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-}
-
-.filter-item {
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-    font-size: 1rem;
-    opacity: 0.8;
-    transition: all 0.2s;
-}
-
-.filter-item:hover {
-    opacity: 1;
-    color: var(--primary-color);
-}
-
-/* Custom Checkbox Design */
-.filter-checkbox {
-    appearance: none;
-    -webkit-appearance: none;
-    width: 20px;
-    height: 20px;
-    border: 2px solid rgba(255, 255, 255, 0.5);
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 6px;
-    margin-right: 12px;
-    cursor: pointer;
-    position: relative;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    backdrop-filter: blur(5px);
-}
-
-.filter-checkbox:hover {
-    border-color: var(--primary-color);
-    background: rgba(255, 255, 255, 0.2);
-}
-
-.filter-checkbox:checked {
-    background-color: var(--primary-color);
-    border-color: var(--primary-color);
-    box-shadow: 0 0 10px var(--primary-color);
-}
-
-.filter-checkbox:checked::after {
-    content: '✔';
-    position: absolute;
-    color: white;
-    font-size: 14px;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-weight: bold;
-}
-
-/* Sidebar Text Styling */
-.filter-item {
-    font-size: 1.1rem;
-    font-weight: 500;
-    padding: 0.5rem 0.8rem;
-    border-radius: 8px;
-    transition: background 0.3s;
-}
-
-.filter-item:hover {
-    background: rgba(255, 255, 255, 0.05);
-}
-
-/* Menu Grid */
-.menu-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 2rem;
-    padding-bottom: 2rem;
-}
-
-/* Section Titles (Hidden if using sidebar filtering usually, but we keep them for now) */
-.menu-category-title {
-    font-size: 1.8rem;
-    margin-bottom: 1.5rem;
-    margin-top: 2rem;
-    width: 100%;
-}
-
-/* Card Styling - Matching Reference */
-.menu-item {
-    background: white; /* Clean white card */
-    border-radius: 8px; /* Slight rounding */
-    box-shadow: 0 4px 15px rgba(0,0,0,0.05); /* Soft shadow */
-    padding: 1.5rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    transition: transform 0.3s, box-shadow 0.3s;
-    height: 100%;
-}
-
-.menu-item:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
-}
-
-/* Image */
-.menu-item-image {
-    width: 100%;
-    height: 180px;
-    object-fit: contain; /* Show full product like reference */
-    margin-bottom: 1rem;
-    filter: drop-shadow(0 5px 10px rgba(0,0,0,0.1));
-}
-
-/* Category Badge */
-.category-badge {
-    background-color: #ffd700; /* Yellow */
-    color: #000;
-    font-weight: 600;
-    font-size: 0.75rem;
-    padding: 0.2rem 1rem;
-    margin-bottom: 0.8rem;
-    text-transform: uppercase;
-}
-
-/* Typography */
-.menu-item h3 {
-    color: #333; /* Dark text */
-    font-size: 1.1rem;
-    font-weight: 700;
-    margin-bottom: 0.5rem;
-    line-height: 1.3;
-    text-transform: uppercase;
-}
-
-.item-subtitle {
-    font-size: 0.9rem;
-    color: #666;
-    margin-bottom: 1rem;
-}
-
-.item-description {
-    font-size: 0.85rem;
-    color: #777;
-    margin-bottom: auto; /* Push price to bottom */
-    line-height: 1.4;
-}
-
-/* Price */
-.price {
-    font-size: 2rem;
-    font-weight: 800;
-    color: #333;
-    margin-top: 1rem;
-}
-
-@media (max-width: 768px) {
-    .menu-page-layout {
-        display: block; /* Stack vertically */
-        padding-top: 1rem;
+const MENU_DATA = [
+    {
+        "category": "Brunch",
+        "items": [
+            {
+                "name": "Balsamic Chicken Fillet",
+                "subtitle": "Con Ensalada De Tomate Y Rucula",
+                "price": "7.95",
+                "id": "balsamic-chicken-fillet",
+                "image": "balsamic-chicken-fillet.jpg",
+                "ingredients": ["Pollo", "tomate", "rúcula", "reducción de vinagre balsámico", "aceite de oliva"],
+                "allergens": ["Sulfitos"]
+            },
+            {
+                "name": "Chicken Fillet Sweet Mush Potato",
+                "subtitle": "Brocoli With Peri Peri Sauce",
+                "price": "8.50",
+                "id": "chicken-fillet-sweet-mush",
+                "image": "chicken-fillet-sweet-mush.jpg",
+                "ingredients": ["Pollo", "boniato", "brócoli", "salsa peri peri"],
+                "allergens": ["Sulfitos"]
+            },
+            {
+                "name": "Chicken Cakes",
+                "subtitle": "Carrots Calabacin Spring Onion Eggs",
+                "price": "7.50",
+                "id": "chicken-cakes",
+                "image": "chicken-cakes.jpg",
+                "ingredients": ["Pollo picado", "zanahoria", "calabacín", "cebolla tierna", "huevo"],
+                "allergens": ["Huevo"]
+            },
+            {
+                "name": "Chicken Fillet Fries",
+                "subtitle": "Sweet Potato Lettuce And Tomato",
+                "price": "7.85",
+                "id": "chicken-fillet-fries",
+                "image": "chicken-fillet-fries.jpg",
+                "ingredients": ["Pollo", "patata", "lechuga", "tomate"],
+                "allergens": []
+            },
+            {
+                "name": "Beef Teryaki Rice",
+                "subtitle": "Lettuce Tomato Mangocucumber Red Onion Spring Onion",
+                "price": "8.95",
+                "id": "beef-teryaki-rice",
+                "image": "beef-teryaki-rice.jpg",
+                "ingredients": ["Ternera", "arroz", "salsa teriyaki", "verduras"],
+                "allergens": ["Soja", "Gluten"]
+            },
+            {
+                "name": "Chicken Wrap Special",
+                "subtitle": "By Chef Served Fries Sweet Potato",
+                "price": "7.95",
+                "id": "chicken-wrap-special",
+                "image": "chicken-wrap-special.jpg",
+                "ingredients": ["Pollo", "tortilla de trigo", "verduras", "salsa especial"],
+                "allergens": ["Gluten"]
+            },
+            {
+                "name": "Quinoa Salmon",
+                "subtitle": "Zuchini, Bell Pepper, Red Onion, Parsley, Garlic Lemon",
+                "price": "9.50",
+                "id": "quinoa-salmon",
+                "image": "quinoa-salmon.jpg",
+                "ingredients": ["Quinoa", "salmón", "verduras", "limón"],
+                "allergens": ["Pescado"]
+            },
+            {
+                "name": "Quinoa Salad",
+                "subtitle": "Zuchini, Bell Pepper, Red Onion, Parsley, Garlic Lemon",
+                "price": "9.95",
+                "id": "quinoa-salad",
+                "image": "quinoa-salad.jpg",
+                "ingredients": ["Quinoa", "calabacín", "pimiento", "cebolla", "ajo", "limón"],
+                "allergens": []
+            }
+        ]
+    },
+    {
+        "category": "Desayunos",
+        "items": [
+            {
+                "name": "Desayuno Grande",
+                "description": "2 Bacon, 2 Huevos, 2 Salchicha, bakebeans, tomate, champinones, hashbrown y tostada",
+                "price": "9.75",
+                "id": "desayuno-grande",
+                "image": "desayuno-grande.jpg",
+                "ingredients": ["Bacon", "huevos", "salchicha", "baked beans", "tomate", "champiñones", "hashbrown", "tostada"],
+                "allergens": ["Gluten", "Huevo"]
+            },
+            {
+                "name": "Desayuno Mediano",
+                "description": "1 bacon, 1 huevo, 1 salchicha, Bakebeans, Tomate, Champinones y Tostada",
+                "price": "6.95",
+                "id": "desayuno-mediano",
+                "image": "desayuno-mediano.jpg",
+                "ingredients": ["Bacon", "huevo", "salchicha", "baked beans", "tomate", "champiñones", "tostada"],
+                "allergens": ["Gluten", "Huevo"]
+            },
+            {
+                "name": "Desayuno Turco",
+                "description": "Salchicha, Spinaca, Avocado, Quezo Feta Y Tostada",
+                "price": "7.50",
+                "id": "desayuno-turco",
+                "image": "desayuno-turco.jpg",
+                "ingredients": ["Salchicha", "espinaca", "aguacate", "queso feta", "tostada"],
+                "allergens": ["Lácteos", "Gluten"]
+            },
+            {
+                "name": "Huevos Fritos",
+                "description": "Con Sweet",
+                "price": "5.00",
+                "id": "huevos-fritos",
+                "image": "huevos-fritos.jpg",
+                "ingredients": ["Huevos", "boniato"],
+                "allergens": ["Huevo"]
+            }
+        ]
+    },
+    {
+        "category": "Special de la Casa",
+        "items": [
+            {
+                "name": "Tostada Aguacate Pochado",
+                "description": "Tostada Con Aguacate Huevos Pochado Salmon Ahumado",
+                "price": "7.50",
+                "id": "tostada-aguacate-pochado",
+                "image": "tostada-aguacate-pochado.jpg",
+                "ingredients": ["Pan", "aguacate", "huevos pochados", "salmón"],
+                "allergens": ["Gluten", "Huevo", "Pescado"]
+            },
+            {
+                "name": "Revuelto Salmon",
+                "description": "Huevos Revuelto Con Salmon Ahumado Aguacate Y Tostada",
+                "price": "7.50",
+                "id": "revuelto-salmon",
+                "image": "revuelto-salmon.jpg",
+                "ingredients": ["Huevos", "salmón", "aguacate", "tostada"],
+                "allergens": ["Gluten", "Huevo", "Pescado"]
+            },
+            {
+                "name": "Huevos Escalpado",
+                "description": "Con Salmon Ahumado Salsa Bernesa Y Tostada",
+                "price": "8.25",
+                "id": "huevos-escalpado",
+                "image": "huevos-escalpado.jpg",
+                "ingredients": ["Huevos", "salmón", "mantequilla", "yema", "tostada"],
+                "allergens": ["Huevo", "Lácteos", "Gluten", "Pescado"]
+            }
+        ]
+    },
+    {
+        "category": "Café",
+        "items": [
+            {
+                "name": "Cafe Con Leche",
+                "price": "1.50",
+                "id": "cafe-con-leche",
+                "image": "cafe-con-leche.jpg",
+                "ingredients": ["Café", "Leche"],
+                "allergens": ["Lácteos"]
+            },
+            {
+                "name": "Café Americano",
+                "price": "1.50",
+                "id": "cafe-americano",
+                "image": "cafe-americano.jpg",
+                "ingredients": ["Café", "Agua"],
+                "allergens": []
+            },
+            {
+                "name": "Café Cortado",
+                "price": "1.50",
+                "id": "cafe-cortado",
+                "image": "cafe-cortado.jpg",
+                "ingredients": ["Café", "Leche"],
+                "allergens": ["Lácteos"]
+            },
+            {
+                "name": "Expresso",
+                "price": "1.40",
+                "id": "expresso",
+                "image": "expresso.jpg",
+                "ingredients": ["Café"],
+                "allergens": []
+            },
+            {
+                "name": "Café Solo Double",
+                "price": "1.80",
+                "id": "cafe-solo-double",
+                "image": "cafe-solo-double.jpg",
+                "ingredients": ["Café doble"],
+                "allergens": []
+            },
+            {
+                "name": "Café Bonbon",
+                "price": "2.50",
+                "id": "cafe-bonbon",
+                "image": "cafe-bonbon.jpg",
+                "ingredients": ["Café", "Leche condensada"],
+                "allergens": ["Lácteos"]
+            },
+            {
+                "name": "Café Sombra",
+                "price": "1.50",
+                "id": "cafe-sombra",
+                "image": "cafe-sombra.jpg",
+                "ingredients": ["Café", "Leche"],
+                "allergens": ["Lácteos"]
+            },
+            {
+                "name": "Capuchino",
+                "price": "2.20",
+                "id": "capuchino",
+                "image": "capuchino.jpg",
+                "ingredients": ["Café", "Leche", "Espuma"],
+                "allergens": ["Lácteos"]
+            },
+            {
+                "name": "Colacao",
+                "price": "2.25",
+                "id": "colacao",
+                "image": "colacao.jpg",
+                "ingredients": ["Cacao", "Leche", "Azúcar"],
+                "allergens": ["Lácteos"]
+            },
+            {
+                "name": "Irish Coffee",
+                "price": "5.50",
+                "id": "irish-coffee",
+                "image": "irish-coffee.jpg",
+                "ingredients": ["Café", "Whisky", "Nata"],
+                "allergens": ["Lácteos"]
+            }
+        ]
+    },
+    {
+        "category": "Tea",
+        "items": [
+            {
+                "name": "Red Thai Cold",
+                "price": "4.25",
+                "id": "red-thai-cold",
+                "image": "red-thai-cold.jpg",
+                "ingredients": ["Té rojo", "Hielo"],
+                "allergens": []
+            },
+            {
+                "name": "Red Thai Hot",
+                "price": "3.00",
+                "id": "red-thai-hot",
+                "image": "red-thai-hot.jpg",
+                "ingredients": ["Té rojo", "Agua caliente"],
+                "allergens": []
+            },
+            {
+                "name": "Green Thai Cold",
+                "price": "4.25",
+                "id": "green-thai-cold",
+                "image": "green-thai-cold.jpg",
+                "ingredients": ["Té verde", "Hielo"],
+                "allergens": []
+            },
+            {
+                "name": "Green Thai Hot",
+                "price": "3.00",
+                "id": "green-thai-hot",
+                "image": "green-thai-hot.jpg",
+                "ingredients": ["Té verde", "Agua caliente"],
+                "allergens": []
+            },
+            {
+                "name": "Ginger Cold",
+                "price": "3.00",
+                "id": "ginger-cold",
+                "image": "ginger-cold.jpg",
+                "ingredients": ["Jengibre", "Hielo"],
+                "allergens": []
+            },
+            {
+                "name": "Ginger Hot",
+                "price": "3.00",
+                "id": "ginger-hot",
+                "image": "ginger-hot.jpg",
+                "ingredients": ["Jengibre", "Agua caliente"],
+                "allergens": []
+            }
+        ]
+    },
+    {
+        "category": "Pan Cakes",
+        "items": [
+            {
+                "name": "Sirope De Fruta",
+                "description": "De Bosque Con Berries",
+                "price": "6.95",
+                "id": "sirope-fruta",
+                "image": "sirope-fruta.jpg",
+                "ingredients": ["Harina", "huevo", "leche", "sirope", "frutas del bosque"],
+                "allergens": ["Gluten", "Huevo", "Lácteos"]
+            },
+            {
+                "name": "Nutella Platano",
+                "description": "Y Miel",
+                "price": "5.95",
+                "id": "nutella-platano",
+                "image": "nutella-platano.jpg",
+                "ingredients": ["Harina", "huevo", "leche", "nutella", "plátano"],
+                "allergens": ["Gluten", "Huevo", "Lácteos", "Frutos secos"]
+            },
+            {
+                "name": "Con Helado",
+                "description": "Y Pistacho",
+                "price": "7.50",
+                "id": "con-helado",
+                "image": "con-helado.jpg",
+                "ingredients": ["Harina", "huevo", "leche", "helado", "pistacho"],
+                "allergens": ["Gluten", "Huevo", "Lácteos", "Frutos secos"]
+            }
+        ]
+    },
+    {
+        "category": "Tortilla a Tu Gusto",
+        "description": "Base (5.00 €) + Ingredientes",
+        "items": [
+            {
+                "name": "Tortilla Base",
+                "price": "5.00",
+                "id": "tortilla-base",
+                "image": "tortilla-base.jpg",
+                "ingredients": ["Huevo"],
+                "allergens": ["Huevo"]
+            },
+            {
+                "name": "Ingrediente Extra",
+                "description": "Queso Feta, Pavo, Tomate, Champinones, Cebolla, Spinaca, Pimientos, Bacon",
+                "price": "+1.00",
+                "id": "extra-tortilla",
+                "image": "extra-tortilla.jpg",
+                "ingredients": ["Opcional: Queso feta, Pavo, Champiñones, Bacon, Cebolla, Tomate, Espinaca, Pimientos"],
+                "allergens": ["Lácteos (si lleva queso)"]
+            }
+        ]
+    },
+    {
+        "category": "Mollete",
+        "items": [
+            {
+                "name": "Tostada Aceite Y Tomate",
+                "price": "2.40",
+                "id": "mollete-aceite",
+                "image": "mollete-aceite.jpg",
+                "ingredients": ["Pan", "aceite de oliva", "tomate"],
+                "allergens": ["Gluten"]
+            },
+            {
+                "name": "Tostada Mantequilla Y Mermelada",
+                "price": "2.50",
+                "id": "mollete-mantequilla",
+                "image": "mollete-mantequilla.jpg",
+                "ingredients": ["Pan", "mantequilla", "mermelada"],
+                "allergens": ["Gluten", "Lácteos"]
+            },
+            {
+                "name": "Mixto",
+                "price": "3.40",
+                "id": "mollete-mixto",
+                "image": "mollete-mixto.jpg",
+                "ingredients": ["Pan", "jamón", "queso"],
+                "allergens": ["Gluten", "Lácteos"]
+            },
+            {
+                "name": "Bacon Y Queso",
+                "price": "3.75",
+                "id": "mollete-bacon",
+                "image": "mollete-bacon.jpg",
+                "ingredients": ["Pan", "bacon", "queso"],
+                "allergens": ["Gluten", "Lácteos"]
+            },
+            {
+                "name": "Tortilla Francesa",
+                "price": "3.60",
+                "id": "mollete-francesa",
+                "image": "mollete-francesa.jpg",
+                "ingredients": ["Pan", "huevo"],
+                "allergens": ["Gluten", "Huevo"]
+            },
+            {
+                "name": "Catalana",
+                "price": "3.60",
+                "id": "mollete-catalana",
+                "image": "mollete-catalana.jpg",
+                "ingredients": ["Pan", "tomate", "jamón"],
+                "allergens": ["Gluten"]
+            },
+            {
+                "name": "Serranito De Pollo",
+                "price": "4.25",
+                "id": "mollete-serranito",
+                "image": "mollete-serranito.jpg",
+                "ingredients": ["Pan", "pollo", "pimiento"],
+                "allergens": ["Gluten"]
+            },
+            {
+                "name": "Pata Jamon Y Tomate",
+                "price": "3.75",
+                "id": "mollete-jamon",
+                "image": "mollete-jamon.jpg",
+                "ingredients": ["Pan", "jamón", "tomate"],
+                "allergens": ["Gluten"]
+            }
+        ]
     }
+];
 
-    .menu-sidebar {
-        border-right: none;
-        border-bottom: 1px solid rgba(0,0,0,0.05);
-        padding: 1rem 0;
-        margin-bottom: 2rem;
-        background: transparent;
-        overflow-x: auto; /* Horizontal scroll */
-        -webkit-overflow-scrolling: touch;
-        white-space: nowrap;
-        position: sticky;
-        top: 60px; /* Below fixed header */
-        z-index: 90;
-        backdrop-filter: blur(10px);
-        background: rgba(211, 217, 220, 0.9); /* Match bg color with opacity */
-        margin-left: -1rem; /* Full width bleeding */
-        margin-right: -1rem;
-        padding-left: 1rem;
+// 2. RENDERING LOGIC
+window.MenuApp = {
+    allData: [],
+
+    init: async function () {
+        const container = document.getElementById('menu-container');
+        if (!container) return; // Not on menu page
+
+        try {
+            // Load data synchronously
+            this.allData = MENU_DATA;
+            this.render(this.allData);
+
+            // Trigger filter init if exists
+            if (window.FilterApp) {
+                window.FilterApp.init(this.allData);
+            }
+        } catch (e) {
+            console.error('Error rendering menu:', e);
+            container.innerHTML = '<p class="error">Error inesperado procesando el menú. ' + e.message + '</p>';
+        }
+    },
+
+    render: function (data) {
+        console.log("Rendering menu with data:", data);
+        const container = document.getElementById('menu-container');
+        if (!container) return;
+
+        try {
+            container.innerHTML = ''; // Clear loading spinner
+
+            data.forEach(category => {
+                const catSection = document.createElement('section');
+                catSection.className = 'menu-category';
+
+                // Create Title
+                const title = document.createElement('h2');
+                title.className = 'menu-category-title';
+                title.textContent = category.category;
+
+                const grid = document.createElement('div');
+                grid.className = 'menu-grid';
+
+                category.items.forEach(item => {
+                    const card = document.createElement('article');
+
+                    // Construct safe image path
+                    const imageName = item.image ? item.image : (item.id + '.jpg');
+                    const imgPath = 'assets/images/dishes/' + imageName;
+
+                    // Smart Fallback Logic (DETERMINISTIC / STABLE)
+                    // 1. Get main keyword (e.g. "Chicken")
+                    const mainIngredient = item.name.split(' ')[0];
+
+                    // 2. Generate a stable number from the name (Hash)
+                    // This ensures "Chicken Fillet" ALWAYS gets the same specific photo, not a random one.
+                    let nameHash = 0;
+                    for (let i = 0; i < item.name.length; i++) {
+                        nameHash = item.name.charCodeAt(i) + ((nameHash << 5) - nameHash);
+                    }
+                    const lockId = Math.abs(nameHash % 500); // 500 stable variations
+
+                    const fallbackUrl = `https://loremflickr.com/600/400/food,restaurant,${mainIngredient}/all?lock=${lockId}`;
+
+                    card.className = 'menu-item'; // Standard white card
+                    card.innerHTML = `
+                    <div style="width: 100%; height: 180px; overflow: hidden; border-radius: 4px; margin-bottom: 1rem;">
+                        <img src="${imgPath}" 
+                             alt="${item.name}" 
+                             class="menu-item-image"
+                             style="width: 100%; height: 100%; object-fit: cover;" 
+                             onerror="this.onerror=null; this.src='${fallbackUrl}';">
+                    </div>
+                    
+                    <span class="category-badge">${category.category}</span>
+                    
+                    <h3>${item.name}</h3>
+                    ${item.subtitle ? `<p class="item-subtitle">${item.subtitle}</p>` : `<p class="item-subtitle">${item.name}</p>`}
+                    
+                    ${item.description ? `<p class="item-description">${item.description}</p>` : ''}
+                    
+                    <span class="price">${item.price}€</span>
+                `;
+                    grid.appendChild(card);
+                });
+
+                catSection.appendChild(title);
+                if (category.description) {
+                    const p = document.createElement('p');
+                    p.textContent = category.description;
+                    p.style.marginBottom = '1.5rem';
+                    catSection.appendChild(p);
+                }
+                catSection.appendChild(grid);
+                container.appendChild(catSection);
+            });
+
+        } catch (e) {
+            console.error('Error rendering menu:', e);
+            container.innerHTML = '<p class="error">Error cargando el menú. Intenta recargar.</p>';
+        }
     }
+};
 
-    /* Hide the "Tipos de productos" title on mobile to save space */
-    .menu-sidebar h3 {
-        display: none;
-    }
-
-    .filters-list {
-        display: flex;
-        flex-direction: row;
-        gap: 0.8rem;
-        padding-right: 1rem;
-    }
-
-    .filter-item {
-        background: #fff;
-        padding: 0.5rem 1.2rem;
-        border-radius: 50px; /* Pill shape */
-        min-width: fit-content;
-        box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-        color: var(--text-color); /* Dark text */
-        border: 1px solid transparent;
-        font-size: 0.9rem;
-    }
-
-    .filter-item:hover, .filter-item:active {
-        border-color: var(--primary-color);
-        background: #fff;
-    }
-    
-    /* Hide the checkbox itself for cleaner pill look on mobile, 
-       or keep it but make it smaller. Let's hide it and style the item when active */
-    .filter-checkbox {
-        display: none; /* Hide confusing checkbox on mobile pills */
-    }
-
-    /* We need JS to add an 'active' class to parent, OR we can rely on :has pseudo-class 
-       but standard checkbox:checked + text is better if we keep structure.
-       Let's keep checkbox but hidden, and style based on :checked if possible, 
-       but the structure is label > intput. */
-       
-    .filter-item:has(.filter-checkbox:checked) {
-        background-color: var(--primary-color);
-        color: white;
-        box-shadow: 0 4px 10px rgba(201, 162, 77, 0.3);
-    }
-    
-    /* Fallback for older browsers if :has isn't supported (iOS < 15.4), 
-       it just won't highlight perfectly but will still filter. 
-       Usually we'd add 'active' class via JS, but let's trust simple toggle. */
-}
-
-/* Allergen Banner */
-.allergen-banner {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1.5rem;
-    padding: 1.5rem 2rem;
-    margin-bottom: 2rem;
-    background: linear-gradient(135deg, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0.4) 100%);
-    border-left: 4px solid var(--primary-color);
-    flex-wrap: wrap;
-}
-
-.allergen-icon i {
-    font-size: 2.5rem;
-    color: var(--primary-color);
-}
-
-.allergen-text {
-    flex: 1;
-}
-
-.allergen-text h3 {
-    margin: 0 0 0.5rem 0;
-    font-size: 1.2rem;
-    color: var(--secondary-color);
-}
-
-.allergen-text p {
-    margin: 0;
-    font-size: 0.95rem;
-    color: #555;
-}
-
-.allergen-btn {
-    white-space: nowrap;
-    background: var(--primary-color) !important;
-    color: white !important;
-    border: none !important;
-    padding: 0.8rem 1.5rem;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-}
-
-.allergen-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(201, 162, 77, 0.4);
-}
-
-@media (max-width: 768px) {
-    .allergen-banner {
-        flex-direction: column;
-        text-align: center;
-    }
-    .allergen-text {
-        margin-bottom: 1rem;
-    }
-}
+document.addEventListener('DOMContentLoaded', () => {
+    window.MenuApp.init();
+});
