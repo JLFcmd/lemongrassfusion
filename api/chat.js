@@ -75,8 +75,7 @@ module.exports = async (req, res) => {
         }
 
         const genAI = new GoogleGenerativeAI(apiKey);
-        // Using 'gemini-pro' (v1.0) which is the most stable and widely available model on v1beta
-        const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+        const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
         const prompt = `
         Actúa como un camarero experto y amable del restaurante "Lemongrass Fusion".
