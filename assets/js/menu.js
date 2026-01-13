@@ -466,14 +466,20 @@ window.MenuApp = {
                     const imageName = item.image ? item.image : (item.id + '.jpg');
                     const imgPath = 'assets/images/dishes/' + imageName;
 
+                    // Smart Fallback Logic
+                    // 1. Try local image
+                    // 2. If fails, try LoremFlickr with dish keywords
+                    const mainIngredient = item.name.split(' ')[0]; // e.g., "Chicken"
+                    const fallbackUrl = `https://loremflickr.com/600/400/food,restaurant,${mainIngredient}/all`;
+
                     card.className = 'menu-item'; // Standard white card
                     card.innerHTML = `
                     <div style="width: 100%; height: 180px; overflow: hidden; border-radius: 4px; margin-bottom: 1rem;">
                         <img src="${imgPath}" 
                              alt="${item.name}" 
                              class="menu-item-image"
-                             style="width: 100%; height: 100%; object-fit: contain;" 
-                             onerror="this.onerror=null; this.src='https://placehold.co/600x400?text=No+Image';">
+                             style="width: 100%; height: 100%; object-fit: cover;" 
+                             onerror="this.onerror=null; this.src='${fallbackUrl}';">
                     </div>
                     
                     <span class="category-badge">${category.category}</span>
