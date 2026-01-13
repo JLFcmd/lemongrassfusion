@@ -440,30 +440,34 @@ window.MenuApp = {
     },
 
     render: function (data) {
+        console.log("Rendering menu with data:", data);
         const container = document.getElementById('menu-container');
-        container.innerHTML = ''; // Clear
+        if (!container) return;
 
-        data.forEach(category => {
-            const catSection = document.createElement('section');
-            catSection.className = 'menu-category';
+        try {
+            container.innerHTML = ''; // Clear loading spinner
 
-            // Create Title
-            const title = document.createElement('h2');
-            title.className = 'menu-category-title';
-            title.textContent = category.category;
+            data.forEach(category => {
+                const catSection = document.createElement('section');
+                catSection.className = 'menu-category';
 
-            const grid = document.createElement('div');
-            grid.className = 'menu-grid';
+                // Create Title
+                const title = document.createElement('h2');
+                title.className = 'menu-category-title';
+                title.textContent = category.category;
 
-            category.items.forEach(item => {
-                const card = document.createElement('article');
+                const grid = document.createElement('div');
+                grid.className = 'menu-grid';
 
-                // Construct safe image path
-                const imageName = item.image ? item.image : (item.id + '.jpg');
-                const imgPath = 'assets/images/dishes/' + imageName;
+                category.items.forEach(item => {
+                    const card = document.createElement('article');
 
-                card.className = 'menu-item'; // Standard white card
-                card.innerHTML = `
+                    // Construct safe image path
+                    const imageName = item.image ? item.image : (item.id + '.jpg');
+                    const imgPath = 'assets/images/dishes/' + imageName;
+
+                    card.className = 'menu-item'; // Standard white card
+                    card.innerHTML = `
                     <div style="width: 100%; height: 180px; overflow: hidden; border-radius: 4px; margin-bottom: 1rem;">
                         <img src="${imgPath}" 
                              alt="${item.name}" 
@@ -481,19 +485,24 @@ window.MenuApp = {
                     
                     <span class="price">${item.price}€</span>
                 `;
-                grid.appendChild(card);
+                    grid.appendChild(card);
+                });
+
+                catSection.appendChild(title);
+                if (category.description) {
+                    const p = document.createElement('p');
+                    p.textContent = category.description;
+                    p.style.marginBottom = '1.5rem';
+                    catSection.appendChild(p);
+                }
+                catSection.appendChild(grid);
+                container.appendChild(catSection);
             });
 
-            catSection.appendChild(title);
-            if (category.description) {
-                const p = document.createElement('p');
-                p.textContent = category.description;
-                p.style.marginBottom = '1.5rem';
-                catSection.appendChild(p);
-            }
-            catSection.appendChild(grid);
-            container.appendChild(catSection);
-        });
+        } catch (e) {
+            console.error('Error rendering menu:', e);
+            container.innerHTML = '<p class="error">Error cargando el menú. Intenta recargar.</p>';
+        }
     }
 };
 
