@@ -69,14 +69,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (data.reply) {
                 appendMessage(data.reply, 'bot');
+            } else if (data.error) {
+                appendMessage('⚠️ Error del sistema: ' + data.error, 'bot');
             } else {
-                appendMessage('Lo siento, tuve un problema conectando con el servidor.', 'bot');
+                appendMessage('Lo siento, el servidor no ha devuelto respuesta.', 'bot');
             }
 
         } catch (error) {
-            console.error(error);
+            console.error("Chat Error Details:", error);
             typingIndicator.style.display = 'none';
-            appendMessage('Error de conexión. Asegúrate de que el backend está corriendo.', 'bot');
+            appendMessage('Error de conexión: ' + error.message, 'bot');
         }
     };
 
