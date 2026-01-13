@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lemongrass Fusion - Carta</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="stylesheet" href="assets/css/chat.css">
+    <link rel="icon" type="image/png" href="assets/images/favicon.png">
+</head>
+<body>
+    <div id="header-container"></div>
+
+    <main class="container menu-page-layout">
+        <!-- Sidebar Filters -->
+        <aside class="menu-sidebar">
+            <h3>Tipos de productos</h3>
+            <div id="filters-container" class="filters-list">
+                <!-- JS will inject checkboxes here -->
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <section class="menu-content">
+            
+            <!-- Allergen Chatbot Banner -->
+            <div class="glass-panel allergen-banner">
+                <div class="allergen-icon">
+                    <i class="fas fa-robot"></i>
+                </div>
+                <div class="allergen-text">
+                    <h3>¿Dudas con los Alérgenos o Ingredientes?</h3>
+                    <p>Nuestro <strong>ThaiChat Bot</strong> (abajo a la derecha) conoce cada detalle de nuestros platos.</p>
+                </div>
+                <button class="glass-btn allergen-btn" onclick="document.getElementById('chat-toggle').click()">
+                    Preguntar al Chatbot <i class="fas fa-comment-dots"></i>
+                </button>
+            </div>
+
+            <!-- Menu Grid Container -->
+            <div id="menu-container">
+                <div style="text-align: center; padding: 2rem;">
+                    <i class="fas fa-spinner fa-spin" style="font-size: 2rem;"></i> Cargando menú...
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div id="footer-container"></div>
+
+    <script src="assets/js/main.js"></script>
+    <script src="assets/js/chat.js"></script>
+    <script src="assets/js/filters.js"></script>
+    <script src="assets/js/menu.js"></script>
+    <script src="assets/js/ui-effects.js"></script>
+</body>
+</html>
