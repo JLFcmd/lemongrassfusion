@@ -48,14 +48,15 @@ module.exports = async (req, res) => {
         return res.status(405).json({ error: 'Method Not Allowed' });
     }
 
-    const { message } = req.body;
-    const apiKey = process.env.GEMINI_API_KEY;
-
-    if (!apiKey) {
-        return res.status(500).json({ error: 'Server configuration error: Missing API Key' });
-    }
-
     try {
+        const { message } = typeof req.body === 'string' ? JSON.parse(req.body) : req.body;
+        const apiKey = process.env.GEMINI_API_KEY;
+
+        if (!apiKey) {
+            console.error("API Key not found in environment variables");
+            return res.status(500).json({ error: 'Server configuration error: Missing API Key' });
+        }
+
         const genAI = new GoogleGenerativeAI(apiKey);
         const model = genAI.getGenerativeModel({ model: "gemini-pro" });
 
@@ -65,7 +66,7 @@ module.exports = async (req, res) => {
         Tu tarea es ayudar al cliente a elegir qué comer basándote SOLO en la siguiente carta de menú.
         Si el cliente pregunta por alérgenos, sé muy estricto y cuidadoso.
         Si preguntan por algo que no está en la lista, di amablemente que no lo tenemos.
-        Sé breve, conciso y sugerente.
+        Sé breve, conciso y sugerente. Por favor, sé muy amable.
 
         CARTA DEL RESTAURANTE (Datos técnicos):
         ${JSON.stringify(MENU_CONTEXT)}
@@ -78,12 +79,13 @@ module.exports = async (req, res) => {
 
         const result = await model.generateContent(prompt);
         const response = await result.response;
+        // Check for candidates
         const text = response.text();
 
         res.status(200).json({ reply: text });
 
     } catch (error) {
-        console.error('Gemini API Error:', error);
-        res.status(500).json({ error: 'Error procesando tu solicitud.' });
+        console.error('Gemini API Error Full:', error);
+        res.status(500).json({ error: 'Error procesando tu solicitud: ' + error.message });
     }
 };
